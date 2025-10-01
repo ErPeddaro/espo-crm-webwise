@@ -1,0 +1,34 @@
+services:
+  espocrm:
+    image: espocrm/espocrm:latest
+    container_name: espocrm
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - ESPOS_ADMIN_USERNAME=webwise
+      - ESPOS_ADMIN_PASSWORD=Krkdpvftc5.
+      - ESPOS_DB_HOST=db
+      - ESPOS_DB_NAME=espocrm
+      - ESPOS_DB_USER=espocrm
+      - ESPOS_DB_PASSWORD=espocrm123
+    depends_on:
+      - db
+    volumes:
+      - espocrm_data:/var/www/html/data
+
+  db:
+    image: mysql:8.0
+    container_name: espocrm-db
+    restart: unless-stopped
+    environment:
+      - MYSQL_ROOT_PASSWORD=root123
+      - MYSQL_DATABASE=espocrm
+      - MYSQL_USER=espocrm
+      - MYSQL_PASSWORD=espocrm123
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  espocrm_data:
+  db_data:
